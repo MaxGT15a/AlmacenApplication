@@ -69,8 +69,7 @@ public class Producto {
     public void descontarCantidad(int cantidad){
         NumberCustomUtils.PositiveInt(cantidad, "La cantidad debe ser positiva");
         if(cantidad > this.cantidad)
-            throw new InvalidDataException("la cantidad debe ser menor " +
-                    "o igual a la cantidad actual");
+            throw new InvalidDataException("la cantidad debe ser menor o igual a la cantidad actual");
         this.cantidad -= cantidad;
     }
 
