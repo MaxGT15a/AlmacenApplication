@@ -35,13 +35,13 @@ public class SucursalController {
     public final SucursalService sucursalService;
 
     @GetMapping
-    @Operation(summary = "Listar Sucursales", description = "Todos los filtros son opcionales")
+    @Operation(summary = "Listar sucursales", description = "Devuelve todas las sucursales")
     @ApiResponse(responseCode = "200", description = "Listado obtenido")
     public ResponseEntity<List<SucursalResponse>> listar(
-            @Parameter(description = "Búsqueda por nombre", example = "Laptop")
+            @Parameter(description = "Búsqueda por nombre", example = "Sucursal")
             @RequestParam(required = false) String nombre,
 
-            @Parameter(description = "Filtro por categoría", example ="Electrónica")
+            @Parameter(description = "Dirección", example ="Av. de las Acacias")
             @RequestParam(required = false) String direccion
     ){
         return ResponseEntity.ok(sucursalService.listar(nombre, direccion));
@@ -92,7 +92,7 @@ public class SucursalController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar un producto")
+    @Operation(summary = "Eliminar una sucursal")
     @ApiResponse(responseCode = "200", description = "Sucursal encontrada")
     @ApiResponse(responseCode = "404", description = "La sucursal no existe",
             content = @Content(mediaType = "application/problem+json",
@@ -101,7 +101,7 @@ public class SucursalController {
             content = @Content(mediaType = "application/problem+json",
                     schema = @Schema(implementation = ProblemaDoc.class)))
     public ResponseEntity<Void> eliminar(
-            @Parameter(description = "Id del producto", example = "1")
+            @Parameter(description = "Id de la sucursal", example = "1")
             @PathVariable @Positive(message = "El ID debe ser positivo") long id
     ){
         sucursalService.eliminar(id);
