@@ -1,0 +1,9 @@
+.contenedor { height: 100vh; }
+.sidenav { width: 240px; display: flex; flex-direction: column; }
+.logo { display: flex; align-items: center; gap: 8px; padding: 16px; font-size: 1.1rem; font-weight: 500; }
+.toolbar { position: sticky; top: 0; z-index: 10; }
+.spacer { flex: 1 1 auto; }
+.contenido { padding: 24px; }
+a.activo { background: var(--mat-sys-secondary-container); }
+a.deshabilitado { pointer-events: none; opacity: 0.5; }
+.pronto { margin-left: auto; font-size: 0.7rem; opacity: 0.7; }
