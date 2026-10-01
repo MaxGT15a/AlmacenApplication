@@ -33,7 +33,7 @@ public class Venta {
     private LocalDate fecha;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "ID_SUCURSAL")
+    @JoinColumn(name = "ID_SUCURSAL")
     private Sucursal sucursal;
 
     @Builder.Default
