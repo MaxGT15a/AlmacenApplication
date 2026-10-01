@@ -30,4 +30,10 @@ public enum Categoria {
 
         throw new InvalidDataException("No existe una categoría con la descripcion: " + descripcion);
     }
+    public static Categoria obtenerNullableCategoria (String descripcion){
+        if (StringCustomUtils.isEmpty(descripcion))
+            return null;
+
+        return Categoria.obtenerCategoriaPorDescripcion(descripcion);
+    }
 }

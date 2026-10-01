@@ -6,6 +6,7 @@ import com.max.almacen.entities.Producto;
 import com.max.almacen.enums.Categoria;
 import com.max.almacen.mappers.ProductoMapper;
 import com.max.almacen.repositories.ProductoRepository;
+import com.max.almacen.utils.StringCustomUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,13 @@ public class ProductoServiceImp implements ProductoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoResponse> listar(String nombre, String categoria, BigDecimal precioMin, BigDecimal precioMax) {
-        log.info("Listando todos los productos");
-        return productoRepository.findAll().stream()
-                //.map(producto -> productoMapper.entidadAtResponse(producto)).toList()
+    public List<ProductoResponse> listar(String nombre, String descripcion, BigDecimal precioMin, BigDecimal precioMax) {
+        log.info("Listando todos los productos...");
+        return productoRepository.buscarPorFiltro(nombre,
+                        Categoria.obtenerNullableCategoria(descripcion),
+                        precioMin,
+                        precioMax)
+                .stream()
                 .map(productoMapper::entidadAtResponse).toList();
     }
 

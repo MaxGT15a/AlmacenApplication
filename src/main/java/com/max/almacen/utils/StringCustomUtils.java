@@ -8,6 +8,10 @@ public class StringCustomUtils {
             throw new InvalidDataException(msg);
     }
 
+    public static boolean isEmpty(String text){
+        return text == null || text.trim().isBlank();
+    }
+
     public static void validateSize(String text, Integer min, Integer max, String msg){
         nonEmpty(text, msg);
 
