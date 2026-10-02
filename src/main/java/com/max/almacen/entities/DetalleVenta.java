@@ -1,6 +1,7 @@
 package com.max.almacen.entities;
 
 import com.max.almacen.exceptions.InvalidDataException;
+import com.max.almacen.utils.NumberCustomUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,5 +41,23 @@ public class DetalleVenta {
             throw new InvalidDataException("La venta es requerida");
 
         this.venta=venta;
+    }
+
+    public static DetalleVenta crear(
+            Producto producto,
+            Integer cantidadProducto
+    ){
+        if(producto == null)
+            throw new InvalidDataException("El producto es requerido");
+
+        NumberCustomUtils.nonNullNum(cantidadProducto, "La cantidad del producto es requerida");
+        NumberCustomUtils.nonNullNum(cantidadProducto, "La cantidad del producto debe ser positiva");
+
+        return DetalleVenta.builder()
+                .producto(producto)
+                .cantidadProducto(cantidadProducto)
+                .precioProducto(producto.getPrecio())
+                .build();
+
     }
 }

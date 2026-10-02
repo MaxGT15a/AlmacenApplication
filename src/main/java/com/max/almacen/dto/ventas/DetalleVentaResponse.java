@@ -21,4 +21,4 @@ public record DetalleVentaResponse(
 
         @Schema(description = "Subtotal del producto", example = "20000")
         BigDecimal subtotal
-) {}
+) { }

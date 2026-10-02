@@ -49,9 +49,9 @@ public class ProductoController {
             @RequestParam(required = false)BigDecimal precioMin,
 
             @Parameter(description = "Precio máximo", example = "20000")
-            @RequestParam(required = false) BigDecimal preciomax
+            @RequestParam(required = false) BigDecimal precioMax
             ){
-        return ResponseEntity.ok(productoService.listar(nombre, categoria, precioMin, preciomax));
+        return ResponseEntity.ok(productoService.listar(nombre, categoria, precioMin, precioMax));
     }
 
     @GetMapping("/{id}")
@@ -81,7 +81,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Registrar un nuevo producto")
+    @Operation(summary = "Actualizar un producto")
     @ApiResponse(responseCode = "200", description = "Producto actualizado")
     @ApiResponse(responseCode = "404", description = "El producto no existe",
             content = @Content(mediaType = "application/problem+json",
