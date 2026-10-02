@@ -8,6 +8,10 @@ import java.util.List;
 public interface VentaService {
     List<VentaResponse> listar();
 
+    List<VentaResponse> listarArchived();
+
+    List<VentaResponse> listarAll();
+
     VentaResponse obtenerPorIdActiva(Long id);
 
     VentaResponse registrar(VentaRequest request);

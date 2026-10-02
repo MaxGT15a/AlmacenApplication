@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +49,37 @@ public class Venta {
         detalleVenta.asignarVenta(this);
     }
 
-    public void cancelar(){
-        if(this.estadoVenta == EstadoVenta.CANCELADA)
-            throw new ConflictException("La venta ya está cancelada");
+    public static Venta crear(Sucursal sucursal) {
+        if(sucursal == null)
+            throw new InvalidDataException(
+                    "La sucursal asociada a la venta es obligatoria"
+            );
 
+        return Venta.builder()
+                .estadoVenta(EstadoVenta.REGISTRADA)
+                .fecha(LocalDate.now())
+                .sucursal(sucursal)
+                .build();
+    }
+
+    public void cancelar(){
+        if (this.estadoVenta == EstadoVenta.CANCELADA)
+            throw new ConflictException(
+                    "La venta ya se encuentra cancelada"
+            );
+        this.detalleVentas.forEach(d->
+                d.getProducto().aumentarCantidad(d.getCantidadProducto())
+        );
         this.estadoVenta = EstadoVenta.CANCELADA;
+    }
+
+    public BigDecimal obtenerTotalVenta(){
+        return this.detalleVentas.stream()
+                .map(d ->
+                        d.getPrecioProducto().multiply(
+                                BigDecimal.valueOf(d.getCantidadProducto())
+                        )
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

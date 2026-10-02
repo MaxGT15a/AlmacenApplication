@@ -4,6 +4,7 @@ import com.max.almacen.dto.producto.ProductoRequest;
 import com.max.almacen.dto.producto.ProductoResponse;
 import com.max.almacen.entities.Producto;
 import com.max.almacen.enums.Categoria;
+import com.max.almacen.exceptions.InvalidDataException;
 import com.max.almacen.mappers.ProductoMapper;
 import com.max.almacen.repositories.ProductoRepository;
 import com.max.almacen.utils.StringCustomUtils;
@@ -27,14 +28,22 @@ public class ProductoServiceImp implements ProductoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoResponse> listar(String nombre, String descripcion, BigDecimal precioMin, BigDecimal precioMax) {
+    public List<ProductoResponse> listar(String nombre, String categoria, BigDecimal precioMin, BigDecimal precioMax) {
         log.info("Listando todos los productos...");
+
+        validarMinMax(precioMin, precioMax);
+
         return productoRepository.buscarPorFiltro(nombre,
-                        Categoria.obtenerNullableCategoria(descripcion),
+                        Categoria.obtenerNullableCategoria(categoria),
                         precioMin,
                         precioMax)
                 .stream()
                 .map(productoMapper::entidadAtResponse).toList();
+    }
+
+    public void validarMinMax (BigDecimal precioMin, BigDecimal precioMax){
+        if (precioMin != null && precioMax != null && precioMin.compareTo(precioMax) > 0)
+            throw new InvalidDataException("Precio mínimo debe ser menor que precio máximo");
     }
 
     @Override
