@@ -1,0 +1,85 @@
+<mat-toolbar color="primary">
+    <span>Productos</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="abrirFormulario()">
+      <mat-icon>add</mat-icon> Nuevo producto
+    </button>
+  </mat-toolbar>
+  
+  <form [formGroup]="filtroForm" class="filtros" (ngSubmit)="buscar()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre">
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Categoría</mat-label>
+      <mat-select formControlName="categoria">
+        <mat-option [value]="null">Todas</mat-option>
+        <mat-option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Precio mín.</mat-label>
+      <input matInput type="number" formControlName="precioMin">
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Precio máx.</mat-label>
+      <input matInput type="number" formControlName="precioMax">
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit">Buscar</button>
+    <button mat-button type="button" (click)="limpiarFiltros()">Limpiar</button>
+  </form>
+  
+  <div class="loading" *ngIf="cargando">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  
+  <table mat-table [dataSource]="productos" *ngIf="!cargando" class="mat-elevation-z2">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let p">{{ p.id }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let p">{{ p.nombre }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef>Categoría</th>
+      <td mat-cell *matCellDef="let p">{{ p.categoria }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef>Precio</th>
+      <td mat-cell *matCellDef="let p">{{ p.precio | currency }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+      <td mat-cell *matCellDef="let p">{{ p.cantidad }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let p">
+        <button mat-icon-button color="primary" matTooltip="Editar" (click)="abrirFormulario(p)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="eliminar(p)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+  </table>
+  
+  <p *ngIf="!cargando && productos.length === 0" class="sin-datos">
+    No se encontraron productos.
+  </p>

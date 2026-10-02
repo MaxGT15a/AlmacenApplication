@@ -1,0 +1,43 @@
+<h1 class="titulo-pagina">Bienvenido al Almacén</h1>
+<p class="subtitulo">Resumen general del sistema</p>
+
+<div class="grid-cards">
+  <mat-card class="card-metrica">
+    <mat-card-content>
+      <mat-icon class="icono">inventory_2</mat-icon>
+      <div>
+        <p class="numero">{{ cargando ? '—' : totalProductos }}</p>
+        <p class="etiqueta">Productos registrados</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-button color="primary" routerLink="/productos">Ver productos</a>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="card-metrica deshabilitada">
+    <mat-card-content>
+      <mat-icon class="icono">store</mat-icon>
+      <div>
+        <p class="numero">—</p>
+        <p class="etiqueta">Sucursales</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <span class="pronto">Próximamente</span>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="card-metrica deshabilitada">
+    <mat-card-content>
+      <mat-icon class="icono">point_of_sale</mat-icon>
+      <div>
+        <p class="numero">—</p>
+        <p class="etiqueta">Ventas</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <span class="pronto">Próximamente</span>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,17 @@
+.spacer { flex: 1 1 auto; }
+
+.filtros {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px;
+  align-items: baseline;
+}
+
+table { width: 100%; }
+
+.loading, .sin-datos {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
